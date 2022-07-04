@@ -1,7 +1,8 @@
+#!/usr/bin/python
+
 from tkinter import *
 from tkinter import ttk
-from time import sleep
-import requests,datetime
+import requests
 
 
 try:
@@ -12,7 +13,8 @@ except:
 !!! Location/API details not found !!!
 Place the appropriate files in the correct locations
 *API file name should be 'weather.api'
-*Location file name should be 'location.txt'""")
+*Location file name should be 'location.txt'
+""")
     exit()
 
 loc_name,loc_code=[],[]
@@ -193,7 +195,6 @@ warning_error=Label(upper_frame,text="Oops! Something went wrong! Try again with
 warning_empty=Label(upper_frame,text="Input is Empty! Enter a Location name to search",background=color2,foreground=color1,font=("Arial",9))
 loading=Label(upper_frame,text="Please wait! Loading...",background=color2,foreground=color8,font=("Arial",9))
 success=Label(upper_frame,text="Search Successful!",background=color2,foreground=color7,font=("Arial",9))
-
 
 
 root.mainloop()
