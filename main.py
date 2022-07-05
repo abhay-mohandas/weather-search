@@ -64,7 +64,6 @@ class Weather:
     def time_convertion(self):
         temp=str(int(self.timezone_epoch)/3600)
         hr_min=temp.split(".")
-        print(hr_min)
         min=str(int(float("0."+hr_min[-1])*60))
         self.timezone_actual=hr_min[0]+":"+min+"hrs (UTC)"
 
@@ -109,11 +108,12 @@ class Extract:
                 date_time=x["dt_txt"].split()
                 weather_main=x["weather"][0]["main"]
                 weather_description=x["weather"][0]["description"]
+                weather_humidity=x["main"]["humidity"]
                 temp=x["main"]["feels_like"]-273.15
                 date_list=date_time[0].split("-")
                 date_list.reverse()
                 date_info=date_list[0]+"/"+date_list[1]+"/"+date_list[2]
-                full_info+="\n\n"+str(num)+") Time:"+date_time[1][:-3]+"\nWeather: "+weather_main+" ("+weather_description+")\nTemp: "+str(temp)[:4]+" Celsius"
+                full_info+="\n\n"+str(num)+") Time:"+date_time[1][:-3]+"\nWeather: "+weather_main+" ("+weather_description+")\nTemp: "+str(temp)[:4]+"*C, Humidity: "+str(weather_humidity)+"%"
                 num+=1
             Label(day_list[day_index],text="Date:"+date_info+full_info,justify=CENTER,foreground=color4,background=color2).pack(anchor="n",side=TOP)
         for day in day_list:
@@ -139,8 +139,8 @@ def search_info():
         root.update()
         details=Extract(city_info)
         loading.pack_forget()
-        success.pack()
         details.print_info()
+        success.pack()
     except:
         loading.pack_forget()
         warning_error.pack()
@@ -163,7 +163,7 @@ upper_frame.pack()
 close=Button(upper_frame,text="X",font=("Sans Bold",7),background=color1,foreground=color4,border=0,activebackground=color5,activeforeground=color4,command=root.destroy)
 close.pack(pady=0,padx=0,ipady=0,anchor="ne",side=RIGHT)
 
-title=Label(upper_frame,text="        World Weather Search        ",font=("Sans Bold",17),background=color0,foreground=color4,justify=CENTER)
+title=Label(upper_frame,text="               World Weather Search               ",font=("Sans Bold",17),background=color0,foreground=color4,justify=CENTER)
 title.pack(pady=5,anchor="n",side=TOP)
 
 city_text = ttk.Label(upper_frame,text="Enter the location name:",font=("Arial",11),background=color2,foreground=color4)
@@ -171,14 +171,13 @@ city_text.pack(anchor="n",padx=50,side=TOP)
 
 city = ttk.Entry(upper_frame,font=("Arial",10),style="Custom.TLabel",justify=CENTER)
 city.focus()
-#city.bind("<Return>",lambda x: search_info)
 city.pack(ipadx=50,pady=5,padx=10,after=city_text,anchor="n")
 
 search=Button(upper_frame,text="Search!",font=("Arial",10),background=color3,foreground=color4,borderwidth=0,justify=CENTER,activebackground=color6,activeforeground=color4,takefocus=True,command=search_info)
 search.pack(after=city,padx=10,pady=10,anchor="n")
 
 lower_frame=Frame(root,width=1000,height=700,bg=color0)
-lower_frame.pack_configure(after=upper_frame,padx=3,pady=3,expand=True,fill=BOTH)
+lower_frame.pack_configure(after=upper_frame,padx=1,pady=1,expand=True,fill=BOTH)
 lower_frame.pack()
 
 inner_frame=Frame(lower_frame,width=1000,height=700,background=color0)
@@ -191,10 +190,11 @@ day5=Frame(inner_frame,background=color2)
 
 day_list=[day1,day2,day3,day4,day5]
 
-warning_error=Label(upper_frame,text="Oops! Something went wrong! Try again with a Valid Input or check the Network Connection!",background=color2,foreground=color1,font=("Arial",9))
-warning_empty=Label(upper_frame,text="Input is Empty! Enter a Location name to search",background=color2,foreground=color1,font=("Arial",9))
-loading=Label(upper_frame,text="Please wait! Loading...",background=color2,foreground=color8,font=("Arial",9))
-success=Label(upper_frame,text="Search Successful!",background=color2,foreground=color7,font=("Arial",9))
+warning_error=Label(upper_frame,text="Oops! Something went wrong! Try again with a Valid Input or check the Network Connection!",background=color2,foreground=color1,font=("Arial",10))
+warning_empty=Label(upper_frame,text="Input is Empty! Enter a Location name to search",background=color2,foreground=color1,font=("Arial",10))
+loading=Label(upper_frame,text="Please wait! Loading...",background=color2,foreground=color8,font=("Arial",10))
+success=Label(upper_frame,text="Search Successful!",background=color2,foreground=color7,font=("Arial",10))
 
+root.bind("<Key-Return>",lambda x: search_info())
 
 root.mainloop()
