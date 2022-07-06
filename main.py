@@ -11,7 +11,7 @@ try:
 except:
     print("""
 !!! Location/API details not found !!!
-Place the appropriate files in the correct locations
+Place the appropriate files in the same folder as the program file
 *API file name should be 'weather.api'
 *Location file name should be 'location.txt'
 """)
@@ -36,8 +36,7 @@ color6="#0000cc"
 color7="#55aa55"
 color8="#5555ff"
 
-nil = "< No Information Found >"
-details=''
+nil = "<Not Found>"
 
 class Forecast:
     def __init__(self,forecast_info):
@@ -86,7 +85,7 @@ class Extract:
                 text=" | Location: "+self.geo.name+"| State: "+self.geo.state+"| Country: "+self.geo.country_name+" ("+self.geo.country_code+")"+"| Latitude: "+self.geo.lat+"| Longitude: "+self.geo.lon+"| Timezone: "+self.weather.timezone_actual+"| ",
                 background=color2,foreground=color4,justify=CENTER).pack(anchor="n",padx=2,pady=2,fill=X,side=TOP)
         weather_list=[]
-        forecast=details.forecast.forecast
+        forecast=self.forecast.forecast
         for x in range(5):
             temp_list=[]
             while True:
@@ -163,13 +162,15 @@ upper_frame.pack()
 close=Button(upper_frame,text="X",font=("Sans Bold",7),background=color1,foreground=color4,border=0,activebackground=color5,activeforeground=color4,command=root.destroy)
 close.pack(pady=0,padx=0,ipady=0,anchor="ne",side=RIGHT)
 
-title=Label(upper_frame,text="               World Weather Search               ",font=("Sans Bold",17),background=color0,foreground=color4,justify=CENTER)
+title=Label(upper_frame,text="                              World Weather Search                              ",font=("Sans Bold",17),background=color0,foreground=color4,justify=CENTER)
 title.pack(pady=5,anchor="n",side=TOP)
 
-city_text = ttk.Label(upper_frame,text="Enter the location name:",font=("Arial",11),background=color2,foreground=color4)
+city_text = ttk.Label(upper_frame,text="Enter the City name:",font=("Arial",11),background=color2,foreground=color4)
 city_text.pack(anchor="n",padx=50,side=TOP)
 
-city = ttk.Entry(upper_frame,font=("Arial",10),style="Custom.TLabel",justify=CENTER)
+
+display=''
+city = ttk.Entry(upper_frame,font=("Arial",10),style="Custom.TLabel",textvariable=display,justify=CENTER)
 city.focus()
 city.pack(ipadx=50,pady=5,padx=10,after=city_text,anchor="n")
 
